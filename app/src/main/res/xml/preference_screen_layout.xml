@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<CheckBoxPreference
+    android:defaultValue="true"
+    android:title="@string/ShowBassSummeryTitle"
+    android:key="@string/ShowBassSummeryKey"
+    android:summaryOn="@string/ShowBassSummeryOn"
+    android:summaryOff="@string/ShowBassSummeryOFF"
+    />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:title="@string/ShowMidSummeryTitle"
+        android:key="@string/ShowMidSummeryKey"
+        android:summaryOn="@string/ShowMidSummeryOn"
+        android:summaryOff="@string/ShowMidSummeryOFF"
+        />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:title="@string/ShowTerableTitle"
+        android:key="@string/ShowTerableKey"
+        android:summaryOn="@string/ShowTerableSummeryOn"
+        android:summaryOff="@string/ShowTerableSummeryOFF"
+        />
+    <ListPreference android:entries="@array/sharedPreferenceVaalueTitles"
+        android:entryValues="@array/sharedPreferenceVaalueKeys"
+        android:key="@string/colorListKey"
+
+        android:defaultValue="@string/pref_color_blue_label"
+        android:title="@string/listColorTitle"/>
+
+</PreferenceScreen>

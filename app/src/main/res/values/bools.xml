@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="showBassDefaultVale">true</bool>
+    <bool name="showMidDefaultVale">true</bool>
+    <bool name="showTerrableDefaultVale">true</bool>
+</resources>

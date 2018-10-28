@@ -18,11 +18,13 @@ package android.example.com.visualizerpreferences;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.example.com.visualizerpreferences.AudioVisuals.AudioInputReader;
 import android.example.com.visualizerpreferences.AudioVisuals.VisualizerView;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -31,25 +33,34 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class VisualizerActivity extends AppCompatActivity {
+public class VisualizerActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final int MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE = 88;
     private VisualizerView mVisualizerView;
     private AudioInputReader mAudioInputReader;
+    SharedPreferences defaultSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizer);
         mVisualizerView = (VisualizerView) findViewById(R.id.activity_visualizer);
+        defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         defaultSetup();
         setupPermissions();
+        defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        defaultSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     private void defaultSetup() {
-        mVisualizerView.setShowBass(false);
-        mVisualizerView.setShowMid(false);
-        mVisualizerView.setShowTreble(true);
+        mVisualizerView.setShowBass(defaultSharedPreferences.getBoolean(getString(R.string.ShowBassSummeryKey),getResources().getBoolean(R.bool.showBassDefaultVale)));
+        mVisualizerView.setShowMid(defaultSharedPreferences.getBoolean(getString(R.string.ShowMidSummeryKey),getResources().getBoolean(R.bool.showMidDefaultVale)));
+        mVisualizerView.setShowTreble(defaultSharedPreferences.getBoolean(getString(R.string.ShowTerableKey),getResources().getBoolean(R.bool.showTerrableDefaultVale)));
         mVisualizerView.setMinSizeScale(1);
         mVisualizerView.setColor(getString(R.string.pref_color_red_value));
     }
@@ -137,4 +148,23 @@ public class VisualizerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+    {
+
+        if(key.equals(getString(R.string.ShowBassSummeryKey)))
+        {
+            mVisualizerView.setShowBass(sharedPreferences.getBoolean(getString(R.string.ShowBassSummeryKey),getResources().getBoolean(R.bool.showBassDefaultVale)));
+
+        }
+       else if(key.equals(getString(R.string.ShowMidSummeryKey)))
+        {
+            mVisualizerView.setShowMid(sharedPreferences.getBoolean(getString(R.string.ShowMidSummeryKey),getResources().getBoolean(R.bool.showMidDefaultVale)));
+
+        }
+        else if(key.equals(getString(R.string.ShowTerableKey)))
+        {
+            mVisualizerView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.ShowTerableKey),getResources().getBoolean(R.bool.showTerrableDefaultVale)));
+        }
+    }
 }

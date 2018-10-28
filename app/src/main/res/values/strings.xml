@@ -13,7 +13,26 @@
     <!-- Value in SharedPreferences for blue color option -->
     <string name="pref_color_blue_value" translatable="false">blue</string>
 
+    <string name="pref_color_blue_label">Blue</string>
+    <string name="pref_color_green_label">Green</string>
+    <string name="pref_color_red_red">Red</string>
+
     <!-- Value in SharedPreferences for green color option -->
     <string name="pref_color_green_value" translatable="false">green</string>
     <string name="settingMenuItem">Setting</string>
+    <string name="ShowTerableSummeryOn">shown</string>
+    <string name="ShowTerableSummeryOFF">hidden</string>
+    <string name="ShowTerableKey" translatable="false">showTerableKey</string>
+    <string name="ShowTerableTitle">show terable</string>
+    <string name="ShowMidSummeryTitle">Show mid</string>
+    <string name="ShowMidSummeryKey" translatable="false">showMidKey</string>
+    <string name="ShowMidSummeryOn">show</string>
+    <string name="ShowMidSummeryOFF">hidden</string>
+    <string name="ShowBassSummeryTitle">Show Bass</string>
+    <string name="ShowBassSummeryKey">showBassKey</string>
+    <string name="ShowBassSummeryOn">shown</string>
+    <string name="ShowBassSummeryOFF">hidden</string>
+    <string name="colorListKey" translatable="false">colorListKey</string>
+    <string name="listColorTitle">Colors</string>
+
 </resources>
