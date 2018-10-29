@@ -34,5 +34,8 @@
     <string name="ShowBassSummeryOFF">hidden</string>
     <string name="colorListKey" translatable="false">colorListKey</string>
     <string name="listColorTitle">Colors</string>
+    <string name="ChangeSizeScaleDefaultValue">1</string>
+    <string name="ChangeSizeScaleTitle">Change Size Scale</string>
+    <string name="ChangeSizeScaleDefaultKey">changeSizeScaleKey</string>
 
 </resources>

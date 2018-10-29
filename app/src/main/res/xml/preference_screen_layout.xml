@@ -28,4 +28,9 @@
         android:defaultValue="@string/pref_color_blue_label"
         android:title="@string/listColorTitle"/>
 
+    <EditTextPreference
+        android:defaultValue="@string/ChangeSizeScaleDefaultValue"
+        android:title="@string/ChangeSizeScaleTitle"
+        android:key="@string/ChangeSizeScaleDefaultKey"
+        />
 </PreferenceScreen>

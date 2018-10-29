@@ -58,13 +58,18 @@ public class VisualizerActivity extends AppCompatActivity implements SharedPrefe
     }
 
     private void defaultSetup() {
-        mVisualizerView.setShowBass(defaultSharedPreferences.getBoolean(getString(R.string.ShowBassSummeryKey),getResources().getBoolean(R.bool.showBassDefaultVale)));
-        mVisualizerView.setShowMid(defaultSharedPreferences.getBoolean(getString(R.string.ShowMidSummeryKey),getResources().getBoolean(R.bool.showMidDefaultVale)));
-        mVisualizerView.setShowTreble(defaultSharedPreferences.getBoolean(getString(R.string.ShowTerableKey),getResources().getBoolean(R.bool.showTerrableDefaultVale)));
-        mVisualizerView.setMinSizeScale(1);
+        mVisualizerView.setShowBass(defaultSharedPreferences.getBoolean(getString(R.string.ShowBassSummeryKey), getResources().getBoolean(R.bool.showBassDefaultVale)));
+        mVisualizerView.setShowMid(defaultSharedPreferences.getBoolean(getString(R.string.ShowMidSummeryKey), getResources().getBoolean(R.bool.showMidDefaultVale)));
+        mVisualizerView.setShowTreble(defaultSharedPreferences.getBoolean(getString(R.string.ShowTerableKey), getResources().getBoolean(R.bool.showTerrableDefaultVale)));
+        SetMinSize();
         mVisualizerView.setColor(getString(R.string.pref_color_red_value));
     }
 
+    public void SetMinSize() {
+        String minSizeScaleText= defaultSharedPreferences.getString(getString(R.string.ChangeSizeScaleDefaultKey), getString(R.string.ChangeSizeScaleDefaultValue));
+        int minSizeScaleValue=Integer.parseInt(minSizeScaleText);
+        mVisualizerView.setMinSizeScale(minSizeScaleValue);
+    }
     /**
      * Below this point is code you do not need to modify; it deals with permissions
      * and starting/cleaning up the AudioInputReader
@@ -98,7 +103,7 @@ public class VisualizerActivity extends AppCompatActivity implements SharedPrefe
             // And if we're on SDK M or later...
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // Ask again, nicely, for the permissions.
-                String[] permissionsWeNeed = new String[]{ Manifest.permission.RECORD_AUDIO };
+                String[] permissionsWeNeed = new String[]{Manifest.permission.RECORD_AUDIO};
                 requestPermissions(permissionsWeNeed, MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE);
             }
         } else {
@@ -133,38 +138,34 @@ public class VisualizerActivity extends AppCompatActivity implements SharedPrefe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.visualizer_menu,menu);
+        menuInflater.inflate(R.menu.visualizer_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.setting)
-        {
-            Intent intent=new Intent(this,SettingsActivity.class);
+        if (item.getItemId() == R.id.setting) {
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-            return  true;
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
-    {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if(key.equals(getString(R.string.ShowBassSummeryKey)))
-        {
-            mVisualizerView.setShowBass(sharedPreferences.getBoolean(getString(R.string.ShowBassSummeryKey),getResources().getBoolean(R.bool.showBassDefaultVale)));
+        if (key.equals(getString(R.string.ShowBassSummeryKey))) {
+            mVisualizerView.setShowBass(sharedPreferences.getBoolean(getString(R.string.ShowBassSummeryKey), getResources().getBoolean(R.bool.showBassDefaultVale)));
 
+        } else if (key.equals(getString(R.string.ShowMidSummeryKey))) {
+            mVisualizerView.setShowMid(sharedPreferences.getBoolean(getString(R.string.ShowMidSummeryKey), getResources().getBoolean(R.bool.showMidDefaultVale)));
+
+        } else if (key.equals(getString(R.string.ShowTerableKey))) {
+            mVisualizerView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.ShowTerableKey), getResources().getBoolean(R.bool.showTerrableDefaultVale)));
         }
-       else if(key.equals(getString(R.string.ShowMidSummeryKey)))
-        {
-            mVisualizerView.setShowMid(sharedPreferences.getBoolean(getString(R.string.ShowMidSummeryKey),getResources().getBoolean(R.bool.showMidDefaultVale)));
-
-        }
-        else if(key.equals(getString(R.string.ShowTerableKey)))
-        {
-            mVisualizerView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.ShowTerableKey),getResources().getBoolean(R.bool.showTerrableDefaultVale)));
+        else if (key.equals(getString(R.string.ChangeSizeScaleDefaultKey))) {
+            SetMinSize();
         }
     }
 }

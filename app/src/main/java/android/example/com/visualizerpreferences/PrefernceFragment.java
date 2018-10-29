@@ -3,12 +3,14 @@ package android.example.com.visualizerpreferences;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
+import android.widget.Toast;
 
-public class PrefernceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PrefernceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener,Preference.OnPreferenceChangeListener {
     PreferenceScreen preferenceScreen;
     SharedPreferences sharedPreferences;
     @Override
@@ -25,6 +27,8 @@ public class PrefernceFragment extends PreferenceFragmentCompat implements Share
                 setSummary(preference, s);
             }
         }
+        Preference minSizeEditTextPreference = findPreference(getString(R.string.ChangeSizeScaleDefaultKey));
+        minSizeEditTextPreference.setOnPreferenceChangeListener(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -45,6 +49,10 @@ public class PrefernceFragment extends PreferenceFragmentCompat implements Share
                   listPreference.setSummary(listPreference.getEntries()[indexOfValue]);
               }
           }
+          else if(preference instanceof EditTextPreference)
+          {
+              preference.setSummary(value);
+          }
     }
 
     @Override
@@ -55,5 +63,29 @@ public class PrefernceFragment extends PreferenceFragmentCompat implements Share
             String value = sharedPreferences.getString(k, "");
             setSummary(preference,value);
         }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        String key = preference.getKey();
+        String value=(String)newValue;
+        if(key.equals(getString(R.string.ChangeSizeScaleDefaultKey)))
+        {
+            Toast error = Toast.makeText(getContext(), "Erro on saving Min Size Scale Value", Toast.LENGTH_SHORT);
+            try
+            {
+                int num = Integer.parseInt(value);
+                if(num>3 || num<=0) {
+                    error.show();
+                    return  false;
+                }
+            }
+            catch (Exception ex)
+            {
+                error.show();
+                return false;
+            }
+        }
+        return true;
     }
 }
